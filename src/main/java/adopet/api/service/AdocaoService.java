@@ -44,8 +44,12 @@ public class AdocaoService {
 
     public void aprovar(AprovarAdocaoDTO dto){
         Adocao adocao = adocaoRepository.getReferenceById(dto.idAdocao());
-        adocao.marcarComoAprovada();
-        adocao.getPet().marcarComoAdotado();
+        try {
+            adocao.marcarComoAprovada();
+            adocao.getPet().marcarComoAdotado();
+        }  catch (EntityNotFoundException e) {
+            System.out.println("Adoção não encontrada: " + e.getMessage());
+        }
     }
 
     public void reprovar(ReprovarAdocaoDTO dto){
